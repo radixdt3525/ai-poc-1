@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  @apply bg-zinc-950 text-zinc-200 font-sans text-[13px] antialiased;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3f3f46 transparent;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-md px-2.5 py-1 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-sky-600 text-white hover:bg-sky-500;
+  }
+  .btn-ghost {
+    @apply btn text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100;
+  }
+  .btn-outline {
+    @apply btn border border-zinc-700 text-zinc-200 hover:bg-zinc-800;
+  }
+  .btn-danger {
+    @apply btn bg-red-600 text-white hover:bg-red-500;
+  }
+  .icon-btn {
+    @apply inline-flex h-6 w-6 items-center justify-center rounded text-zinc-400 hover:bg-zinc-800 hover:text-zinc-100 disabled:opacity-40;
+  }
+  .input {
+    @apply w-full rounded-md border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-[13px] text-zinc-100 placeholder:text-zinc-500 focus:border-sky-500 focus:outline-none;
+  }
+  .label {
+    @apply mb-1 block text-xs font-medium text-zinc-400;
+  }
+  .panel-header {
+    @apply flex h-9 shrink-0 items-center gap-2 border-b border-zinc-800 px-3 text-xs font-semibold uppercase tracking-wide text-zinc-400;
+  }
+}
+
+/* Markdown rendered in chat / insights */
+.md {
+  @apply text-[13px] leading-relaxed text-zinc-200;
+}
+.md p {
+  @apply my-2;
+}
+.md ul {
+  @apply my-2 list-disc pl-5;
+}
+.md ol {
+  @apply my-2 list-decimal pl-5;
+}
+.md li {
+  @apply my-0.5;
+}
+.md h1,
+.md h2,
+.md h3,
+.md h4 {
+  @apply mb-1 mt-3 font-semibold text-zinc-100;
+}
+.md h1 {
+  @apply text-base;
+}
+.md h2,
+.md h3 {
+  @apply text-sm;
+}
+.md a {
+  @apply text-sky-400 underline;
+}
+.md code:not(pre code) {
+  @apply rounded bg-zinc-800 px-1 py-0.5 font-mono text-[12px] text-amber-200;
+}
+.md table {
+  @apply my-2 block overflow-x-auto border-collapse text-xs;
+}
+.md th,
+.md td {
+  @apply border border-zinc-700 px-2 py-1 text-left;
+}
+.md th {
+  @apply bg-zinc-800;
+}
+.md blockquote {
+  @apply border-l-2 border-zinc-600 pl-3 text-zinc-400;
+}
+.md strong {
+  @apply text-zinc-50;
+}

@@ -1,0 +1,47 @@
+name: pgadmin-plus
+
+services:
+  meta-db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: pgplus
+      POSTGRES_PASSWORD: pgplus
+      POSTGRES_DB: pgplus
+    # localhost only, for inspecting the app's own data with psql/pgAdmin
+    ports:
+      - "127.0.0.1:${META_DB_PORT:-5434}:5432"
+    volumes:
+      - meta-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pgplus -d pgplus"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      META_DATABASE_URL: postgresql+asyncpg://pgplus:pgplus@meta-db:5432/pgplus
+    depends_on:
+      meta-db:
+        condition: service_healthy
+    # lets the app reach a Postgres running on your machine via host.docker.internal
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "${APP_PORT:-8080}:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  meta-data:
